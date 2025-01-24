@@ -11,7 +11,6 @@ parser.add_argument("-c", "--channel", help="The rumble channel to get the data 
 args = parser.parse_args()
 print(args.channel)
 channel = args.channel
-#channel = "https://rumble.com/c/AlexanderMercouris"
 
 def load_config(config_file: str):
     pass

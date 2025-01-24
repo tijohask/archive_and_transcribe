@@ -3,8 +3,6 @@ import requests
 import time
 
 def make_rumble_request(channel, page_num, allow_redirects=True):
-    #print(page_num)
-#    channel = "https://rumble.com/c/AlexanderMercouris"
     request_url = f"{channel}?page={page_num}"
     return requests.get(
         request_url,
@@ -28,7 +26,6 @@ def get_next_vid_link(channel):
     i = 1
     while True:
         req = make_rumble_request(channel, i)
-        print(req.status_code)
         if req.status_code > 299:
             print(req.status_code)
             break
