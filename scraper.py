@@ -42,4 +42,4 @@ def get_next_vid_link(channel):
                 'link'     : link,
             }
             yield json
-
+        i = i + 1
