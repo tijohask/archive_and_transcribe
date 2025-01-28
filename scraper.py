@@ -22,6 +22,7 @@ def make_rumble_request(channel, page_num, allow_redirects=True):
     )
 
 
+
 def get_next_vid_link(channel):
     i = 1
     while True:
@@ -33,6 +34,8 @@ def get_next_vid_link(channel):
         soup = BeautifulSoup(content, 'html.parser')
         all_divs = soup.find_all('div', class_="videostream__footer")
         for div in all_divs:
+            if ('videostream__footer--live' in div['class']):
+                continue
             datetime = div.address.div.span.time['datetime']
             title = div.a.h3.string.strip()
             link = channel + div.a['href']
