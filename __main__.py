@@ -1,4 +1,3 @@
-import logging
 import os
 import argparse
 
@@ -17,8 +16,12 @@ def load_config(config_file: str):
 
 
 def main():
+    i = 0
     for vid in get_next_vid_link(channel):
         print(vid)
+        download_content(vid['link'])
+        i = i + 1
+        if (i > 3): break
 
 
 
