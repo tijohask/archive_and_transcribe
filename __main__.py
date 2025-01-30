@@ -19,9 +19,8 @@ def main():
     i = 0
     for vid in get_next_vid_link(channel):
         print(vid)
-        download_content(vid['link'])
-        i = i + 1
-        if (i > 3): break
+        os.makedirs(f"./output/{vid['channel_name']}", exist_ok=True)
+        #download_content(vid)
 
 
 

@@ -38,11 +38,13 @@ def get_next_vid_link(channel):
                 continue
             datetime = div.address.div.span.time['datetime']
             title = div.a.h3.string.strip()
-            link = channel + div.a['href']
+            link = 'https://rumble.com/' + div.a['href']
+            ch = channel.replace('https://rumble.com/c/', '')
             json = {
                 'datetime' : datetime,
                 'title'    : title,
                 'link'     : link,
+                'channel_name': ch,
             }
             yield json
         i = i + 1
