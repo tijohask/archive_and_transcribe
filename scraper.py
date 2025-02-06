@@ -34,7 +34,7 @@ def get_next_vid_link(channel):
         soup = BeautifulSoup(content, 'html.parser')
         all_divs = soup.find_all('div', class_="videostream thumbnail__grid--item")
         for one_div in all_divs:
-            if ("videostream__footer--live" in one_div.div['class']):
+            if ("thumbnail__thumb--live" in one_div.div['class']):
                 continue
             duration = one_div.div.div.div.string.strip()
             datetime = one_div.find('div', class_="videostream__footer").address.div.span.time['datetime']
