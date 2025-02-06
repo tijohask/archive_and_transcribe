@@ -32,15 +32,17 @@ def get_next_vid_link(channel):
             break
         content = req.content
         soup = BeautifulSoup(content, 'html.parser')
-        all_divs = soup.find_all('div', class_="videostream__footer")
-        for div in all_divs:
-            if ('videostream__footer--live' in div['class']):
+        all_divs = soup.find_all('div', class_="videostream thumbnail__grid--item")
+        for one_div in all_divs:
+            if ("videostream__footer--live" in one_div.div['class']):
                 continue
-            datetime = div.address.div.span.time['datetime']
-            title = div.a.h3.string.strip()
-            link = 'https://rumble.com/' + div.a['href']
-            ch = channel.replace('https://rumble.com/c/', '')
+            duration = one_div.div.div.div.string.strip()
+            datetime = one_div.find('div', class_="videostream__footer").address.div.span.time['datetime']
+            title = one_div.find('div', class_="videostream__footer").a.h3.string.strip()
+            link = 'https://rumble.com/' + one_div.find('div', class_="videostream__footer").a['href']
+            ch = channel.replace('https://rumble.com/c/', '').replace('https://rumble.com/user/', '')
             json = {
+                'duration' : duration,
                 'datetime' : datetime,
                 'title'    : title,
                 'link'     : link,
