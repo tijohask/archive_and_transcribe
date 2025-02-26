@@ -42,11 +42,8 @@ def load_config(config_file: str):
 
 def get_seconds_from_duration(duration):
     dur_arr = duration.split(':')
-    square = 0
-    seconds = 0
-    for i in reversed(dur_arr):
-        seconds = seconds + (int(i) * (60 ** square))
-        square = square + 1
+    if(len(dur_arr) < 3): dur_arr.insert(0, '00')
+    seconds = (int(dur_arr[0]) * 3600) + (int(dur_arr[1]) * 60) + int(dur_arr[2])
     return seconds
 
 def can_download(vid):
