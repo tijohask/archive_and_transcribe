@@ -5,6 +5,7 @@ import random
 
 from scraper import get_next_vid_link
 from download import download_content
+from download import valid_title
 from transcribe import transcribe_file
 
 parser = argparse.ArgumentParser()
@@ -47,9 +48,10 @@ def get_seconds_from_duration(duration):
     return seconds
 
 def can_download(vid):
-    if os.path.exists(f"{output}/{vid['title']}.m4a"):
+    title = valid_title(vid['title'])
+    if os.path.exists(f"{output}/{title}.m4a"):
         return False
-    print(f"{output}/{vid['title']}.m4a")
+    print(f"{output}/{title}.m4a")
     duration = get_seconds_from_duration(vid['duration'])
     if(max_duration and duration > max_duration):
         return False
@@ -64,8 +66,8 @@ def main():
         print(vid)
         os.makedirs(output, exist_ok=True)
         if (can_download(vid)):
-            time.sleep(random.randint(min_sleep, max_sleep))
             download_content(vid)
+            time.sleep(random.randint(min_sleep, max_sleep))
             i = i + 1
         if (max_videos and i >= max_videos):
             break
