@@ -10,10 +10,14 @@ ydl_opts = {
     ]
 }
 
+def valid_title(string):
+    return string.replace("/", "-").replace(":", "-").replace("\"", "-").replace("?", "-")
+
 def download_content(vid):
     #print(ydl_opts)
     # Adding to the ydl_opts here because I want to store every video in
     # a folder named after the channel.
-    ydl_opts['outtmpl'] = f"{vid['output']}/{vid['title']}.%(ext)s"
+    title = valid_title(vid['title'])
+    ydl_opts['outtmpl'] = f"{vid['output']}/{title}.%(ext)s"
     ydl = yt_dlp.YoutubeDL(ydl_opts)
     info = ydl.extract_info(vid['link'])
