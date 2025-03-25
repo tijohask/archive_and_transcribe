@@ -21,3 +21,4 @@ def download_content(vid):
     ydl_opts['outtmpl'] = f"{vid['output']}/{title}.%(ext)s"
     ydl = yt_dlp.YoutubeDL(ydl_opts)
     info = ydl.extract_info(vid['link'])
+    return info['requested_downloads'][0]['filepath']

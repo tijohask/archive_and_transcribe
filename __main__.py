@@ -72,7 +72,8 @@ def main():
         print(vid)
         os.makedirs(output, exist_ok=True)
         if (can_download(vid)):
-            download_content(vid)
+            file = download_content(vid)
+            transcribe_file(file)
             time.sleep(random.randint(min_sleep, max_sleep))
             i = i + 1
         if (max_videos and i >= max_videos):
