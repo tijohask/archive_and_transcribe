@@ -10,7 +10,7 @@ from transcribe import transcribe_file
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--channel", help="The rumble channel to get the data out of")
-parser.add_argument("-v", "--video", help="")
+parser.add_argument("-v", "--video", help="Option to process a single video instead of a channel")
 parser.add_argument("-m", "--max-videos", help="How many videos to download before stopping")
 parser.add_argument("--max-duplicates", help="Number of duplicates that can be found before ending the program")
 parser.add_argument("--max-duration", help="Maximum duration for video download in seconds")
