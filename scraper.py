@@ -2,8 +2,7 @@ from bs4 import BeautifulSoup
 import requests
 import time
 
-def make_rumble_request(channel, page_num, allow_redirects=True):
-    request_url = f"{channel}?page={page_num}"
+def make_rumble_request(request_url, allow_redirects=True):
     return requests.get(
         request_url,
         headers={
@@ -11,7 +10,7 @@ def make_rumble_request(channel, page_num, allow_redirects=True):
             "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:133.0) Gecko/20100101 Firefox/133.0",
             "Accept": "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
             "Accept-Language": "en-US,en;q=0.5",
-            "Accept-Encoding": "gzip, deflate, br, zstd",
+#            "Accept-Encoding": "gzip, deflate, br, zstd",
             "Connection": "keep-alive",
             "Upgrade-Insecure-Requests": "1",
             "Sec-Fetch-Dest": "document",
@@ -21,12 +20,11 @@ def make_rumble_request(channel, page_num, allow_redirects=True):
         }
     )
 
-
-
 def get_next_vid_link(channel):
     i = 1
     while True:
-        req = make_rumble_request(channel, i)
+        request_url = f"{channel}?page={i}"
+        req = make_rumble_request(request_url)
         if req.status_code > 299:
             print(req.status_code)
             break

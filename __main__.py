@@ -10,6 +10,7 @@ from transcribe import transcribe_file
 
 parser = argparse.ArgumentParser()
 parser.add_argument("-c", "--channel", help="The rumble channel to get the data out of")
+parser.add_argument("-v", "--video", help="")
 parser.add_argument("-m", "--max-videos", help="How many videos to download before stopping")
 parser.add_argument("--max-duplicates", help="Number of duplicates that can be found before ending the program")
 parser.add_argument("--max-duration", help="Maximum duration for video download in seconds")
@@ -34,8 +35,8 @@ if(args.min_duration): min_duration = int(args.min_duration)
 if(args.sleep_interval): min_sleep = int(args.sleep_interval)
 if(args.max_sleep_interval): max_sleep = int(args.max_sleep_interval)
 if(args.output): output = args.output
-if(not channel):
-    print("Channel Required")
+if(not channel and not args.video):
+    print("Channel or Video Required")
     exit()
 
 #sanity check for sleep interval
@@ -65,14 +66,22 @@ def can_download(vid):
         return False
     return True
 
+def get_vid():
+    if(args.video):
+        yield {'link': args.video}
+    if(channel):
+        for i in get_next_vid_link(channel):
+            yield i
+
 def main():
     i = 0
-    for vid in get_next_vid_link(channel):
+    for vid in get_vid():
         vid['output'] = output
         print(vid)
         os.makedirs(output, exist_ok=True)
-        if (can_download(vid)):
-            download_content(vid)
+        if (args.video in vid['link'] or can_download(vid)):
+            file = download_content(vid)
+            transcribe_file(file)
             time.sleep(random.randint(min_sleep, max_sleep))
             i = i + 1
         if (max_videos and i >= max_videos):
